@@ -7,7 +7,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class ArticleController extends AbstractController
+class ReviewsController extends AbstractController
 {
     /**
      * @Route("/", name="get_aticles")
@@ -15,6 +15,6 @@ class ArticleController extends AbstractController
      */
     public function index()
     {
-        return $this->render('article/index.html.twig');
+        return $this->render('reviews/index.html.twig');
     }
 }
