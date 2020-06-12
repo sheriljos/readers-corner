@@ -15,6 +15,7 @@ class ReviewsController extends AbstractController
      */
     public function index()
     {
-        return $this->render('reviews/index.html.twig');
+        $reviews = ['Some gibberish', 'Some other gibberish'];
+        return $this->render('reviews/index.html.twig', compact('reviews'));
     }
 }

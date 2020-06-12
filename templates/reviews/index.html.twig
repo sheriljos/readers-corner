@@ -4,4 +4,22 @@
 
 {% block body %}
     <h1> Four Pillers of Self Love </h1>
+    <table class="table table-striped">
+        <thead>
+            <tr class="table-active">
+                <th scope="col">Type</th>
+                <th scope="col">Column heading</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for review in reviews %}
+                <tr>
+                    <td>{{ review }}</td>
+                    <td>
+                        <button type="button" class="btn btn-primary">View</button>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table> 
 {% endblock %}
