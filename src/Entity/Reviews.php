@@ -31,4 +31,36 @@ class Reviews
      * @ORM\Column(type="text")
      */
     private $body;
+
+    /**
+     * Get the value of title
+     */ 
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Set the value of title
+     */ 
+    public function setTitle($title)
+    {
+        $this->title = $title;
+    }
+
+    /**
+     * Get the value of body
+     */ 
+    public function getBody()
+    {
+        return $this->body;
+    }
+
+    /**
+     * Set the value of body
+     */ 
+    public function setBody($body)
+    {
+        $this->body = $body;
+    }
 }
