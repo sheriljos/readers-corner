@@ -3,8 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\Reviews;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @method Reviews|null find($id, $lockMode = null, $lockVersion = null)
@@ -19,32 +19,19 @@ class ReviewsRepository extends ServiceEntityRepository
         parent::__construct($registry, Reviews::class);
     }
 
-    // /**
-    //  * @return Reviews[] Returns an array of Reviews objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function create()
     {
-        return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('r.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        $reviews = new Reviews();
+        $reviews->setTitle('Review One');
+        $reviews->setBody('This is the body of the review 1');
 
-    /*
-    public function findOneBySomeField($value): ?Reviews
-    {
-        return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        try {
+            $this->_em->persist($reviews);
+            $this->_em->flush();
+
+            return $reviews;
+        } catch (Exception $exception) {
+            echo 'An exception occured in saving your review: ',  $e->getMessage(), "\n";
+        }
     }
-    */
 }
