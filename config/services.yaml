@@ -25,3 +25,14 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    reviewsrepository:
+        class: Doctrine\ORM\EntityRepositoryApp\Repository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - App\Entity\Reviews
+
+    reviewscontroller:
+        class: App\Controller\ReviewsController
+        arguments:
+            - "@reviewsrepository"
