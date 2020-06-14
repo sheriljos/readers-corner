@@ -33,6 +33,11 @@ class Reviews
     private $body;
 
     /**
+     * @ORM\Column(type="text")
+     */
+    private $image;
+
+    /**
      * Get the value of title
      */ 
     public function getTitle()

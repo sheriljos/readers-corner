@@ -12,7 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ReviewsController extends AbstractController
 {
-    public $reviewsRespository;
+    public $reviewsRepository;
 
     public function __construct(ReviewsRepository $reviewsRepository)
     {
@@ -20,7 +20,7 @@ class ReviewsController extends AbstractController
     }
 
     /**
-     * @Route("/", name="get_aticles")
+     * @Route("/", name="get_reviews")
      * @Method({"GET"})
      */
     public function index()
@@ -34,4 +34,19 @@ class ReviewsController extends AbstractController
         
         return $this->render('reviews/index.html.twig', compact('reviews'));
     }
+
+    /**
+     * @Route("/review/{id}", name="get_review")
+     * @Method({"GET"})
+     */
+    public function getReview($id)
+    {
+        try {
+            $review = $this->reviewsRepository->getReview($id)[0];
+        } catch (Exception $exception) {
+            //TODO: Handle exception(hint: may be show a 404 page)
+            throw new Exception("Error occured in fetching the review of $id");
+        }
+
+        return $this->render('reviews/show.html.twig', compact('review'));    }
 }

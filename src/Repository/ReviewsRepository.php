@@ -37,13 +37,28 @@ class ReviewsRepository extends ServiceEntityRepository
 
     public function findAll()
     {
-        try {
-            return $this->createQueryBuilder('r')
+        $query = $this->createQueryBuilder('r')
                 ->select('r')
-                ->getQuery()
-                ->execute();
+                ->getQuery();
+
+        try {
+            return $query->execute();
         }  catch (Exception $exception) {
-            echo 'Error occured in fetching reviews',  $e->getMessage(), "\n";
+            throw new Exception($exception->getMessage());
+        }
+    }
+
+    public function getReview($id)
+    {
+        $query = $this->createQueryBuilder('r')
+            ->where('r.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery();
+
+        try {
+            return $query->execute();
+        } catch (Exception $exception) {
+            throw new Exception($exception->getMessage());
         }
     }
 }

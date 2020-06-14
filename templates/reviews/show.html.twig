@@ -1,0 +1,14 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Self Love{% endblock %}
+
+{% block body %}
+    <div class="d-flex align-items-center flex-column">
+        <h3>{{ review.title }}</h3>
+        <img src="https://blindhypnosis.com/images/book/pride-and-prejudice-pdf-jane-austen.webp"
+            alt="{{ review.title }}" width="400" height="600">
+        <p>{{ review.body }}</p>
+        <hr/>
+        <a type="button" href="/" class="btn btn-primary">Back</a>
+    </div>
+{% endblock %}
