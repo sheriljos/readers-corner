@@ -34,4 +34,16 @@ class ReviewsRepository extends ServiceEntityRepository
             echo 'An exception occured in saving your review: ',  $e->getMessage(), "\n";
         }
     }
+
+    public function findAll()
+    {
+        try {
+            return $this->createQueryBuilder('r')
+                ->select('r')
+                ->getQuery()
+                ->execute();
+        }  catch (Exception $exception) {
+            echo 'Error occured in fetching reviews',  $e->getMessage(), "\n";
+        }
+    }
 }

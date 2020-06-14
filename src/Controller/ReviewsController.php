@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Exception;
 use App\Entity\Reviews;
 use App\Repository\ReviewsRepository;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,19 +25,13 @@ class ReviewsController extends AbstractController
      */
     public function index()
     {
-        $reviews = ['Some gibberish', 'Some other gibberish'];
+        try {
+            $reviews = $this->reviewsRepository->findAll();
+        } catch (Exception $exception) {
+            //TODO: Handle exception(hint: may be show a 404 page)
+            throw new Exception("Error occured in fetching the reviews");
+        }
+        
         return $this->render('reviews/index.html.twig', compact('reviews'));
-    }
-
-    /**
-     * @Route("article/create")
-     */
-    public function create()
-    {
-        $reviews = $this->reviewsRepository->create();
-
-        return $this->json(
-            ['message'   =>  "The article is saves" . $reviews->getTitle()]
-        );
     }
 }
