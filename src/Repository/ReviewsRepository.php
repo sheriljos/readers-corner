@@ -19,12 +19,8 @@ class ReviewsRepository extends ServiceEntityRepository
         parent::__construct($registry, Reviews::class);
     }
 
-    public function create()
+    public function create(Reviews $reviews)
     {
-        $reviews = new Reviews();
-        $reviews->setTitle('Review One');
-        $reviews->setBody('This is the body of the review 1');
-
         try {
             $this->_em->persist($reviews);
             $this->_em->flush();
