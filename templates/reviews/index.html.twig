@@ -4,11 +4,11 @@
 
 {% block body %}
     <h1>Find your reviews here</h1>
-    <table class="table table-striped">
+    <table class="table table-striped" id="reviews">
         <thead>
             <tr class="table-active">
-                <th scope="col">Type</th>
-                <th scope="col">Column heading</th>
+                <th scope="col">Reviews</th>
+                <th scope="col">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -17,9 +17,14 @@
                     <td>{{ review.title }}</td>
                     <td>
                         <a type="button" href="review/{{ review.id }}" class="btn btn-primary">View</a>
+                        <a type="button" href="#output-content" data-id="{{ review.id }}"class="btn btn-danger">Delete</a>
                     </td>
                 </tr>
             {% endfor %}
         </tbody>
     </table> 
+{% endblock %}
+
+{% block javascripts %}
+    <script src="js/myscript.js"></script>
 {% endblock %}
