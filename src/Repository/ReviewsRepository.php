@@ -57,4 +57,18 @@ class ReviewsRepository extends ServiceEntityRepository
             throw new Exception($exception->getMessage());
         }
     }
+
+    public function deleteReview($id)
+    {
+        $qb = $this->_em->createQueryBuilder()
+            ->delete('App\Entity\Reviews', 'r')
+            ->where('r.id = :id')
+            ->setParameter('id', $id);
+
+        try {
+            return $qb->getQuery()->execute();
+        } catch (Exception $exception) {
+            throw new Exception($exception->getMessage());
+        }
+    }
 }

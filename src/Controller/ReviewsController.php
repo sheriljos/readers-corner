@@ -91,4 +91,22 @@ class ReviewsController extends AbstractController
 
         return $this->render('reviews/show.html.twig', compact('review'));    
     }
+
+    /**
+     * @Route("/reviews/delete/{id}")
+     * @Method({"DELETE"})
+     */
+    public function deleteReview($id)
+    {
+        try {
+            if ($this->reviewsRepository->deleteReview($id)) {
+                return $this->json(['success' => true],200);
+            }
+
+            return $this->json(['success' => false],200);
+        } catch (Exception $exception) {
+            //TODO: Handle exception(hint: may be show a 404 page)
+            throw new Exception("Error occured in deleting the review of $id");
+        }
+    }
 }

@@ -9,8 +9,16 @@ if (reviews) {
 
                 fetch(`/reviews/delete/${id}`, {
                     method: 'DELETE'
-                }).then(response => console.log(response))
-                .catch(err => alert('an error occured'))
+                })
+                .then(response => response.json())
+                .then(response => {
+                    if (response.success) {
+                      window.location.reload();
+                    } else {
+                        alert('some error occured while deleting the review');
+                    }
+                })
+                .catch(error => alert('some error occured while deleting the review'));
             }
         }
     });
