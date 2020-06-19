@@ -47,13 +47,7 @@ class ReviewsController extends AbstractController
     {
         $review = new Reviews();
 
-        $form = $this->createFormBuilder($review)
-            ->add('title', TextType::class, ['attr' => ['class' => 'form-control']])
-            ->add('body', TextareaType::class, ['attr' => ['class' => 'form-control']])
-            ->add('save', SubmitType::class, [
-                'label' => 'Drop your review', 
-                'attr' => ['class' => 'btn btn-primary mt-3'
-            ]])->getForm();
+        $form = $this->getForm($review, "Drop your review");
 
         $form->handleRequest($request);
                                      //TODO: Perform validation
@@ -71,9 +65,45 @@ class ReviewsController extends AbstractController
         }
 
         return $this->render(
-            'reviews/create.html.twig', [
-                'form' => $form->createView()
+            'reviews/createOrEdit.html.twig', [
+                'form'  => $form->createView(),
+                'title' => 'Drop your review'
         ]);
+    }
+
+    /**
+     * @Route("review/edit/{id}", name="review_edit")
+     * @Method({"PUT"})
+     */
+    public function editReview(Request $request, $id)
+    {
+        try {
+            $review = $this->reviewsRepository->getReview($id)[0];
+    
+            $form = $this->getForm($review, "Drop your review");
+            $form->handleRequest($request);
+                                         //TODO: Perform validation
+            if ($form->isSubmitted() &&  $form->isValid()) {
+                $review = $form->getData();
+    
+                try {
+                    $this->reviewsRepository->create($review);
+                } catch (Exception $exception) {
+                    //TODO: Handle exception(hint: may be show a 404 page)
+                    throw new Exception("Error occured in saving the review");
+                }
+    
+                return $this->redirectToRoute('get_reviews');
+            }
+    
+            return $this->render(
+                'reviews/createOrEdit.html.twig', [
+                    'form'  => $form->createView(),
+                    'title' => 'Edit your review'
+            ]);
+        } catch (Exception $exception) {
+            //TODO: show a notification that an error occured
+        }
     }
 
     /**
@@ -108,5 +138,17 @@ class ReviewsController extends AbstractController
             //TODO: Handle exception(hint: may be show a 404 page)
             throw new Exception("Error occured in deleting the review of $id");
         }
+    }
+
+    private function getForm(Reviews $review, $label)
+    {
+        return
+            $this->createFormBuilder($review)
+                ->add('title', TextType::class, ['attr' => ['class' => 'form-control']])
+                ->add('body', TextareaType::class, ['attr' => ['class' => 'form-control']])
+                ->add('save', SubmitType::class, [
+                    'label' => $label, 
+                    'attr' => ['class' => 'btn btn-primary mt-3'
+                ]])->getForm();
     }
 }
